@@ -1,0 +1,448 @@
+1Q=FREE
+2PR."Difficult game (Y/N)?",
+3GOS.675
+4Y=3000-2000*(A=89)
+6PR."Stardate 3200: your mission is ",
+
+7K=0:B=0:D=40:I=0
+
+12FORI=0TO63
+14J=RND(100)<5
+15B=B+J
+16M=RND(Y)
+17M=(M<209)+(M<99)+(M<49)+(M<24)+(M<9)+(M<2)
+18K=K+M
+19@(I)=-100*M-10*J-RND(8)
+20NEXTI
+
+22IF(B<2)+(K<4)GO.7
+
+24PR.#3,"to destroy",K," Klingons in",D," stardates."
+26PR.#3,"There are",B," Starbases."
+27GOS.110
+28C=0
+29H=K
+30GOS.627
+31GOS.634
+32GOS.87
+33GOS.323
+34PR.:PR."R=Report      S=SR sensor L=LR sensor"
+37PR."G=Galaxy map  P=Phaser    T=Torpedo"
+38PR."W=Warp engine Q=Quit"
+39PR."Captain?":GOS.675:PR.
+41IFA=71GOS.137
+42IFA=76GOS.182
+43IFA=83GOS.210
+44IFA=80GOS.251
+45IFA=82GOS.387
+46IFA=87GOS.422
+47IFA=84GOS.513
+48IFA=81 A=-1
+49IFA>0GO.34
+50IFA=-1GO.83
+52GOS.87
+53GOS.323
+54IFKGO.67
+55PR."Mission accomplished."
+56IFD<3PR."Boy, you barely made it."
+57IFD>5PR."Good work..."
+58IFD>9PR."Fantastic!"
+59IFD>13PR."Unbelievable!"
+60D=30-D
+61I=H*100/D*10
+62PR.H," Klingons in",D," stardates. (",I,")"
+63J=100*(C=0)-5*C
+64PR.C,"casualties incurred. (",J,")"
+65PR."Your score:",I+J
+66GO.77
+67IFD>=0GO.71
+69PR."It's too late, the federation has been conquered."
+70GO.77
+71IFE>=0GO.34
+73PR."Enterprise destroyed"
+74IFH-K>9 PR."But you were a hero"
+79PR.:PR."Another game (Y/N)?":GOS.675
+82IFA=89GO.1
+83PR."Bye."
+85END
+87FORI=X-(X>1)TOX+(X<8) 
+91FORJ=Y-(Y>1)TOY+(Y<8)
+94IF@(8*I+J+62)=2GOTO105
+95NEXTJ
+97NEXTI
+99O=0:R.
+105IFO=0PR."Sulu: 'Captain, we are docked at Starbase.'"
+107GOS.110:R.
+110E=4000
+112F=10
+113O=1
+114FORI=64TO70
+117@(I)=0
+118NEXTI
+120R.
+123S=RND(8)
+126T=RND(8)
+127A=8*S+T+62
+128IF@(A)GO.123
+129@(A)=I
+131R.
+133PR.:PR.#1,"Enterprise in Q-",U,",",V," S-",X,",",Y:R.
+137A=1
+139GOS.133
+140J=2
+141GOS.374
+142IFI R.
+143PR."of galaxy map"
+144I=0
+145IFI>7GO.160
+147PR.
+148PR.#1,I+1,": ",
+149J=0
+150IFJ>7GO.157
+152M=@(8*I+J)
+153M=(M>0)*M
+154PR.#1,M/100,M/10-M/100*10,M-M/10*10," ",
+155J=J+1
+156GO.150
+157I=I+1
+159GO.145
+160PR.
+162PR."   ",
+163I=0
+164IFI>7GO.169
+166PR."... ",
+167I=I+1
+168GO.164
+169PR.:PR."    ",
+172I=1
+173IFI>8GO.178
+175PR.#1,I,"   ",
+176I=I+1
+177GO.173
+178PR.
+180R.
+
+182GOS.133
+184J=3
+185GOS.374
+186IFI R.
+187PR.
+
+188I=U-1
+189IFI>U+1GO.206
+190IF(I<1)+(I>8)GOTO204
+191J=V-1
+192IFJ>V+1GO.202
+193IF(J<1)+(J>8)GOTO200
+194M=8*I+J-9
+195A=0
+196IF(I>0)*(I<9)*(J>0)*(J<9) A=@(M)
+197IFA<0 A=-A
+198@(M)=A
+199PR.#1,A/100,A/10-A/100*10,A-A/10*10," ",
+200J=J+1
+201GO.192
+202PR.
+204I=I+1
+205GO.189
+206A=1
+208R.
+
+210A=1
+212GOS.133
+213J=1
+214GOS.374
+215IFIR.
+216M=8*U+V-9
+217IF@(M)<0 @(M)=-@(M)
+218PR.
+219FORI=1TO8
+222PR.#1,I,
+223FORJ=1TO8
+226M=@(8*I+J+62)
+227IFM=0PR." .",
+228IFM=1PR." K",
+229IFM=2PR." B",
+230IFM=3PR." *",
+231IFM=4PR." E",
+232IF(M<0)+(M>4) PR." ?",
+234NEXTJ
+235PR.
+238NEXTI
+239PR." ",
+241I=1
+242IFI>8GO.247
+244PR.#2,I,
+245I=I+1
+246GO.242
+247PR.
+249R.
+251J=4
+253A=1
+254GOS.374
+255IFIR.
+256IN." energized. Units to fire"A
+258IFA>=1GO.261
+259A=1
+260R.
+261IFA<=EGO.266
+263PR."Spock: 'We have only",E,"units.'"
+264A=1
+265R.
+266E=E-A
+268IFN>=1GO.272
+269PR."Phaser fired at empty space."
+270A=0
+271R.
+272A=A/N
+274M=135
+275IFM>140GO.286
+277IF@(M)GO.280
+278M=M+1
+279GO.275
+280GOS.290
+282PR.S," units hit",
+283GOS.303
+284M=M+1
+285GO.275
+286A=0
+288R.
+290IFA<=1090GO.297
+292PR."..overloaded.."
+293J=4
+294@(67)=1
+295A=9
+296GOS.374
+297I=@(M+6)- X
+299J=@(M+12)-Y
+300S=A*30/(30+I*I+J*J)+1
+301R.
+303PR." Klingon at S-",#1,@(M+6),",",@(M+12),
+305@(M)=@(M)-S
+306IF@(M)<=0GO.309
+307PR."**damaged**"
+308R.
+309@(M)=0
+311I=8*U+V-9
+312J=0
+313IF@(I)>0 J=1
+314IF@(I)<0 J=-1
+315@(I)=@(I)-100*J
+316K=K-1
+317I=8*@(M+6)+@(M+12)+62
+318@(I)=0
+319N=N-1
+320PR."***destroyed***"
+321R.
+323A=1
+325IFN=0R.
+326PR."Klingon attack"
+327IFO=0GO.330
+328PR."Starbase protects Enterprise":R.
+330T=0:M=135
+333IFM>140GO.347
+335IF@(M)GO.338
+336M=M+1
+337GO.333
+338A=(@(M)+RND(@(M)))/2
+340GOS.290
+341T=T+S:I=@(M+6):J=@(M+12)
+344PR.S," units hit from Klingon at s-",#1,I,",",J,$7
+345M=M+1
+346GO.333
+347E=E-T
+349IFE>0GO.352
+350PR."*** bang ***",$7,$7,$7:R.
+352PR.E," units of energy left."
+354IFRND((E+T)/4)>T R.
+355GOS.359
+356A=1:R.
+359IF@(70)GO.365
+361@(70)=RND(T/50+1):J=7
+363GOS.374:R.
+365J=RND(6):@(J+63)=RND(T/99+1)+@(J+63):I=RND(8)+1:C=C+I
+370PR.#2,"McCoy: 'Sickbay to bridge, we suffered",I," casualties.'"
+371GOS.374
+372R.
+374I=@(J+63)
+376IFJ=1PR."Short range sensor",
+377IFJ=2PR."Computer display ",
+378IFJ=3PR."Long range sensor",
+379IFJ=4PR."Phaser",
+380IFJ=5PR."Warp engine",
+381IFJ=6PR."Photon torpedo tubes",
+382IFJ=7PR."Shield",
+383IFI=0R.
+384PR.#2," damaged,",I," stardates estimated for repair":R.
+387A=1
+389PR."Status report:"
+390PR."Stardate",#5,3230-D
+391PR."Time left",#4,D
+392PR."Condition: ",
+393IFO=0GO.396
+394PR."Docked"
+395GO.406
+396IFN=0GO.400
+398PR."Red"
+399GO.406
+400IFE>=999GO.404
+402PR."Yellow"
+403GO.406
+404PR."Green"
+406PR.#1,"Position: Q-",U,",",V," S-",X,",",Y
+408PR."Energy ",E
+409PR."Torpedoes",#4,F
+410PR."Klingons",#5,K
+411PR."Starbases",#4,B
+412FORJ=1TO7
+415IF@(J+63)GOS.374
+417NEXTJ
+418A=1:R.
+422J=5:A=1
+425GOS.374
+426IFI=0 PR.
+427IN."Sector distance"W:A=1
+431IFW<1R.
+432IFI*(W>2)=0GO.435
+433PR."Chekov: 'We can try 2 at most, sir.'"
+434GO.427
+435IFW<=91GO.440
+438W=91:PR."Spock: 'Are you sure, Captain?'"
+440IFE>=W*W/2GO.444
+442PR."Scotty: 'Sir, we do not have the energy.'":R.
+444GOS.595
+446A=1
+447IFR=0R.
+448D=D-1:E=E-W*W/2:@(8*X+Y+62)=0:M=64
+452IFM>70GO.457
+454@(M)=(@(M)-1)*(@(M)>0):M=M+1
+456GO.452
+457P=45*X+22:G=45*Y+22:W=45*W
+
+462FORM=1TO8
+464W=W-R
+465IFW>=-22GO.470
+466@(8*X+Y+62)=4
+467A=0:GOS.133:R.
+470P=P+S:G=G+T:I=P/45:J=G/45
+475IF(I<1)+(I>8)+(J<1)+(J>8)GO.489
+476IF@(8*I+J+62)GO.483
+477X=I:Y=J
+480NEXTM
+
+481GO.489
+483PR."**Emergency stop**":PR."Spock: 'To err is human.'":@(8*X+Y+62)=4
+486GOS.133
+487A=0:R.
+
+489P=U*72+P/5+W/5*S/R-9:U=P/72:G=V*72+G/5+W/5*T/R-9:V=G/72
+494IFRND(9)>=2GO.498
+495PR."***Space storm***"
+496T=100
+497GOS.359
+498IF(U<1)+(U>8)+(V<1)+(V>8)GO.505
+500X=(P+9-72*U)/9:Y=(G+9-72*V)/9
+502GOS.634
+503A=0:R.
+505PR."**You wandered outside the galaxy**"
+507PR."On board computer takes over, and saves your life"
+508GOS.627
+509GOS.634
+510A=0:R.
+513J=6:A=1
+516GOS.374
+517IFIR.
+518IFFGO.521
+519PR." empty":R.
+521PR." loaded"
+523GOS.595
+524IFR=0R.
+525PR."Torpedo track ",
+526F=F-1:P=45*X+22:G=45*Y+22:M=1
+530IFM>8GO.590
+532P=P+S:G=G+T:I=P/45:J=G/45
+536IF(I<1)+(I>8)+(J<1)+(J>8)GO.590
+537L=8*I+J+62:W=8*U+V-9:R=0
+540IF@(W)>0R=1
+541IF@(W)<0R=-1
+542PR.#1,I,",",J," ",:A=0
+544IF@(L)<>0GO.547
+545M=M+1
+546GO.530
+547IF@(L)<>1GO.559
+549S=RND(99)+280:M=135
+551IFM>140GO.556
+553IF(@(M+6)=I)*(@(M+12)=J)GOS.303
+554M=M+1
+555GO.551
+556A=0:R.
+559IF@(L)<>2GO.568
+561B=B-1:@(L)=0:@(W)=@(W)-10*R
+564PR."Starbase destroyed"
+565PR."Spock: 'I often find human behaviour fascinating.'":R.
+567A=0
+568IF@(L)<>3GO.588
+570PR."Hit a star"
+571IFRND(9)>=3GO.575
+572PR."Torpedo absorbed"
+573A=0:R.
+575@(L)=0:@(W)=@(W)-R
+578IFRND(9)>=6GO.582
+579PR."Star destroyed":A=0:R.
+582T=300:PR."It novas ***radiation alarm***":GOS.359
+586A=0:R.
+588GO.530
+590PR."...missed"
+592A=0:R.
+595IN."Course (0-360)"I
+598IF(I<=360)*(I>=0)GO.601
+599R=0:R.
+601S=(I+45)/90:I=I-S*90:R=(45+I*I)/110+45
+605IFS>3S=0
+606IFS<>0GO.610
+607S=-45:T=I:R.
+610IFS<>1GO.615
+612S=I
+613T=45
+614R.
+615IFS<>2GO.620
+617S=45
+618T=-I
+619R.
+620IFS<>3GO.627
+622S=-I
+623T=-45
+624R.
+627U=RND(8):V=RND(8):X=RND(8):Y=RND(8):R.
+634I=71
+636IFI>152GO.641
+638@(I)=0
+639I=I+1
+640GO.636
+641@(8*X+Y+62)=4
+643M=@(8*U+V-9)
+644IFM<0 M=-M
+645N=M/100
+646I=1
+647IFN=0GO.658
+648J=1:PR.:PR."RED ALERT!!",$7
+649IFJ>NGO.658
+651GOS.123
+652@(J+134)=300:@(J+140)=S:@(J+146)=T
+655J=J+1
+656GO.649
+658GOS.133
+660M=M-100*N
+661I=2
+662IFM/10GOS.123
+663M=M-M/10*10
+664I=3
+665IFM=0GO.673
+666J=1
+667IFJ>MGO.673
+669GOS.123
+670J=J+1
+671GO.667
+673A=0:R.
+
+675GET$(Q):A=Q(1):R.
