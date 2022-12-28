@@ -289,7 +289,7 @@
 402PR."Yellow"
 403GO.406
 404PR."Green"
-406PR.#1,"Position: Q-",U,",",V," S-",X,",",Y
+406PR.#1,"Position:  Q-",U,",",V," S-",X,",",Y
 408PR."Energy ",E
 409PR."Torpedoes",#4,F
 410PR."Klingons",#5,K

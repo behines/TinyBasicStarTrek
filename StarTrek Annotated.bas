@@ -421,7 +421,7 @@ ADD?: If SR or LR are working, then Enterprise's current quadrant becomes known
 3360 M = M + 1
 3370 GOTO 3330
 3380 REM END IF
-3390 A = (@(M) + RND(@(M)) + 1) / 2   : Energy of Klingon attack - 50-100% of their shields
+3390 A = (@(M) + RND(@(M)) + 1) / 2   : Energy of Klingon attack - 50-100% of their energy
 3400 GOSUB 2900                       : Compute damage from Klingon
 3410 T = T + S                        : Accumulate damage
 3420 I = @(M + 6)
