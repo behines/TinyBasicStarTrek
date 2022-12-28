@@ -6,14 +6,14 @@
 
 7K=0:B=0:D=40:I=0
 
-12FORI=0TO63
+12F.I=0TO63
 14J=RND(100)<5
 15B=B+J
 16M=RND(Y)
 17M=(M<209)+(M<99)+(M<49)+(M<24)+(M<9)+(M<2)
 18K=K+M
 19@(I)=-100*M-10*J-RND(8)
-20NEXTI
+20N.I
 
 22IF(B<2)+(K<4)GO.7
 
@@ -50,14 +50,14 @@
 59IFD>13PR."Unbelievable!"
 60D=30-D
 61I=H*100/D*10
-62PR.H," Klingons in",D," stardates. (",I,")"
+62PR.#3,H," Klingons in",D," stardates. (",I,")"
 63J=100*(C=0)-5*C
-64PR.C,"casualties incurred. (",J,")"
+64PR.C," casualties incurred. (",J,")"
 65PR."Your score:",I+J
-66GO.77
+66GO.79
 67IFD>=0GO.71
 69PR."It's too late, the federation has been conquered."
-70GO.77
+70GO.79
 71IFE>=0GO.34
 73PR."Enterprise destroyed"
 74IFH-K>9 PR."But you were a hero"
@@ -65,20 +65,20 @@
 82IFA=89GO.1
 83PR."Bye."
 85END
-87FORI=X-(X>1)TOX+(X<8) 
-91FORJ=Y-(Y>1)TOY+(Y<8)
+87F.I=X-(X>1)TOX+(X<8) 
+91F.J=Y-(Y>1)TOY+(Y<8)
 94IF@(8*I+J+62)=2GOTO105
-95NEXTJ
-97NEXTI
+95N.J
+97N.I
 99O=0:R.
 105IFO=0PR."Sulu: 'Captain, we are docked at Starbase.'"
 107GOS.110:R.
 110E=4000
 112F=10
 113O=1
-114FORI=64TO70
+114F.I=64TO70
 117@(I)=0
-118NEXTI
+118N.I
 120R.
 123S=RND(8)
 126T=RND(8)
@@ -156,9 +156,9 @@
 216M=8*U+V-9
 217IF@(M)<0 @(M)=-@(M)
 218PR.
-219FORI=1TO8
+219F.I=1TO8
 222PR.#1,I,
-223FORJ=1TO8
+223F.J=1TO8
 226M=@(8*I+J+62)
 227IFM=0PR." .",
 228IFM=1PR." K",
@@ -166,9 +166,9 @@
 230IFM=3PR." *",
 231IFM=4PR." E",
 232IF(M<0)+(M>4) PR." ?",
-234NEXTJ
+234N.J
 235PR.
-238NEXTI
+238N.I
 239PR." ",
 241I=1
 242IFI>8GO.247
@@ -294,9 +294,9 @@
 409PR."Torpedoes",#4,F
 410PR."Klingons",#5,K
 411PR."Starbases",#4,B
-412FORJ=1TO7
+412F.J=1TO7
 415IF@(J+63)GOS.374
-417NEXTJ
+417N.J
 418A=1:R.
 422J=5:A=1
 425GOS.374
@@ -319,7 +319,7 @@
 456GO.452
 457P=45*X+22:G=45*Y+22:W=45*W
 
-462FORM=1TO8
+462F.M=1TO8
 464W=W-R
 465IFW>=-22GO.470
 466@(8*X+Y+62)=4
@@ -328,7 +328,7 @@
 475IF(I<1)+(I>8)+(J<1)+(J>8)GO.489
 476IF@(8*I+J+62)GO.483
 477X=I:Y=J
-480NEXTM
+480N.M
 
 481GO.489
 483PR."**Emergency stop**":PR."Spock: 'To err is human.'":@(8*X+Y+62)=4
