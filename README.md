@@ -6,7 +6,7 @@ computer.  At present, Nuts & Volts is out of stock of the kits, but I've seen t
 you can use David Hunter's Eagle files to make your own.
 
 The main code file is very hard to read because I was working hard to make it fit into 8K of RAM.  The 
-code was adapted from a listing by Brian Denley at https://groups.io/g/ET-3400/topic/88950752#2212, for 
+code was adapted from a listing posted by Brian Denley at https://groups.io/g/ET-3400/topic/88950752#2212, for 
 the Heathkit ET-3400.  After I got started, I came to learn that the initial listing had numerous bugs
 which were fixed later.  The final version was uploaded to the ET-3400 group's project archives, but
 the final results had numerous hard dependencies on the ET-3400 (e.g. USR() calls) and thus was not
