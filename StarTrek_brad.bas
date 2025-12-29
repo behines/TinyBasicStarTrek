@@ -2,9 +2,9 @@
 2PR."Difficult game (Y/N)?",
 3GOS.675
 4Y=3000-2000*(A=89)
-6PR."Stardate 3200: your mission is ",
+6PR."Stardate",#5,3230-D,": your mission is",
 
-7K=0:B=0:D=40:I=0
+7K=0:B=0:D=30+10*(A=78):I=0
 
 12F.I=0TO63
 14J=RND(100)<5
@@ -91,41 +91,36 @@
 139GOS.133
 140J=2
 141GOS.374
-142IFI R.
+142IFIR.
 143PR."of galaxy map"
-144I=0
-145IFI>7GO.160
-147PR.
-148PR.#1,I+1,": ",
-149J=0
-150IFJ>7GO.157
-152M=@(8*I+J)
-153M=(M>0)*M
-154PR.#1,M/100,M/10-M/100*10,M-M/10*10," ",
-155J=J+1
-156GO.150
-157I=I+1
-159GO.145
+
+144F.I=0TO7
+147PR.:PR.#1,I+1,": ",
+149F.J=0TO7
+150M=@(8*I+J)
+151M=(M>0)*M
+152S=(I+1=U)*(J+1=V)
+153IFSPR."*",:GO.155
+154PR." ",
+155PR.#1,M/100,M/10-M/100*10,M-M/10*10,
+156IFSPR."*",:GO.158
+157PR." ",
+158N.J
+159N.I
+
 160PR.
-162PR."   ",
-163I=0
-164IFI>7GO.169
-166PR."... ",
-167I=I+1
-168GO.164
-169PR.:PR."    ",
-172I=1
-173IFI>8GO.178
-175PR.#1,I,"   ",
-176I=I+1
-177GO.173
+162PR."    ",
+
+164F.I=0TO7:PR."...  ",:N.I
+169PR.:PR."     ",
+173F.I=1TO8:PR.#1,I,"    ",:N.I
 178PR.
 180R.
 
 182GOS.133
 184J=3
 185GOS.374
-186IFI R.
+186IFIR.
 187PR.
 
 188I=U-1
@@ -345,7 +340,7 @@
 502GOS.634
 503A=0:R.
 505PR."**You wandered outside the galaxy**"
-507PR."On board computer takes over, and saves your life"
+507PR."On board computer takes over and saves your life"
 508GOS.627
 509GOS.634
 510A=0:R.

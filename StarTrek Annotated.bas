@@ -3,13 +3,13 @@
 30 GOSUB 6770 
 40 Y = 2999
 50 IF A = 121 Y = 999   : REM Y affects number of Klingons
-60 PRINT "Stardate 3200: your mission is",
+60 PRINT "Stardate",#5,3230-D,": your mission is",
 
 
 70 REM DO
 80 K = 0
 90 B = 0
-100 D = 30
+100 D = 30   : New code - D = 40 for normal, 30 for difficult
 110 I = 0
 
 120 REM DO
@@ -212,6 +212,8 @@ ADD?: If SR or LR are working, then Enterprise's current quadrant becomes known
 1590 GOTO 1450
 
 1600 REM LOOP
+
+
 1610 PRINT
 1620 PRINT "  ",
 1630 I = 0
@@ -451,7 +453,7 @@ ADD?: If SR or LR are working, then Enterprise's current quadrant becomes known
 3630 GOSUB 3740                   : Report damage
 3640 RETURN
 
-3650 REM END IF                   : No shields, compute further damange and casualties
+3650 REM END IF                   : No shields, compute further damage and casualties
 3660 J = RND(6) + 1               : What gets damaged (not shields)
 3670 @(J + 63) = RND(T / 99 + 1) + 1 + @(J + 63)   : Accrue damage 
 3680 I = RND(8) + 2                : 2-9 casualties

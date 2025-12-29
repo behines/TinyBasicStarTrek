@@ -28,6 +28,8 @@ X	Enterprise sector row [-Y coordinate)
 Y	Enterprise sector column, and year <= 2999  [+X coordinate]
 Z	spare, now used as base address for @ array = 16384
 
+
+
 @ array = Z + N, #Bases, #Klingons, #Stars  (Digits = Klingons, bases, stars)
                      Negative value == Not yet discovered
 0	quadrant 1,1 
@@ -178,7 +180,7 @@ Z	spare, now used as base address for @ array = 16384
 139	Klingon #5 energy
 140	Klingon #6 energy
 
-	Klingon location in sector
+	Klingon sector location in quadrant
 141	Klingon #1 row
 142	Klingon #2 row
 143	Klingon #3 row
@@ -259,3 +261,96 @@ Z	spare, now used as base address for @ array = 16384
 216	quadrant 8,8
 
 217: Scratch memory 1
+
+
+FROM THE ROM LISTING:
+
+201a                 TXTBGN:	DS	1	; TEXT SAVE AREA BEGINS 
+                        ;
+                        ;	TEXT AREA HERE ~ 7.5K
+                        ;	AND GOES UP IN MEMORY
+                        ;	
+                        ;
+                        ;	A-Z ARRAY MEMORY STARTS BELOW VARIABLES
+                        ;	AND GOES DOWN IN MEMORY IN THE ORDER OF THE "DIM"
+                        ;	STATEMENTS
+                        ;
+                        ;	@ ARRAY MEMORY STARTS FROM VARBGN GOES DOWN IN MEMORY
+                        ;	AND THEREFORE OVERLAPS THE OTHER ARRAY MEMORY
+                        ;
+                        ; NOTE: PATB USER VARIABLES MUST START ON A PAGE BOUNDARY
+                        ;
+   3e00                 	ORG	3E00H
+   3e00                 TXTEND:	EQU	$	; TEXT SAVE AREA ENDS 
+   3e00                 VARBGN: DS	2*27	; USER VARIABLES @(0), A-Z
+   3e36                 	DS	2	; EXTRA BYTES FOR LINE NUMBER
+   3e38                 BUFFER: DS	80	; INPUT BUFFER
+   3e88                 BUFEND: EQU	$	; BUFFER ENDS
+   3e88                 	DS	10	; PADDING BETWEEN BUFFER AND STACK
+   3e92                 STKLMT:	EQU	$	; TOP LIMIT FOR STACK
+                        ;
+   3f00                 	ORG	3F00H
+
+
+Per CHATGPT:
+
+What the ROM actually does (from altaids.lst)
+
+FREE
+
+FREE is just the program-text “end” pointer: FREE: LHLD TXTUNF then RET.
+So it returns TXTUNF = first free byte after your stored BASIC program.
+
+SIZE
+
+SIZE returns the byte gap between the end of program text and the start of the “claimed-from-the-top” array area:
+SIZE = ARRUNF - TXTUNF (in bytes).
+
+@()
+
+@(<expr>) is special-cased (not a normal DIM’d array).
+
+It computes a byte offset = 2 * index, checks that offset is ≤ SIZE (so it won’t overwrite program text or DIM-allocated space), then computes the element address as:
+address = VARBGN - (2 * index)
+i.e. @() lives at the top of the free gap, growing downward from VARBGN (3E00H).
+
+Also: it explicitly errors if the index evaluates to 0 in the general “array reference” path; for @() you should treat valid indices as 1.. (so @(1) is the first word).
+
+DIM
+
+DIM <var>(<size>) allocates a 1-D array from ARRUNF downward, zeros it, then:
+
+updates ARRUNF to the new “top-of-free-array-space” (lower address),
+
+stores the array base address into <var> (so later you do <var>(k)).
+
+
+@() and DIM'ed arrays overlap in memory.
+
+
+ABOUT ARRAYS AND DIM
+
+Q = FREE simply copies the numeric value of FREE (the address of first free byte) into Q. At that point, Q contains 
+an address, but BASIC does not care — it’s just a number.
+
+What makes something an “array”? 
+A variable only becomes an array when you use the () syntax:
+  Q → scalar numeric value
+  Q(i) → array access using the base address stored in Q
+
+For DIM’d arrays:
+  DIM Q(n) stores a base address into Q
+  Q(i) means “fetch word at base(Q) ± 2*i”
+
+For @():
+  The base address is implicit and fixed (VARBGN)
+  @(i) skips the variable lookup step
+
+So can any variable be a pointer?
+  Yes. In this BASIC, every numeric variable can be used as a pointer if you treat it that way.
+
+
+In essence, DIM's are allocated off a heap that grows downward, while FREE can be used to implement a heap that grows upward.
+
+The BASIC stack is at STACK=3fa0 and can grow down to STKLMT=3e92.
+
