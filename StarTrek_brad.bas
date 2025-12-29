@@ -2,9 +2,9 @@
 2PR."Difficult game (Y/N)?",
 3GOS.675
 4Y=3000-2000*(A=89)
-6PR."Stardate",#5,3230-D,": your mission is",
-
-7K=0:B=0:D=30+10*(A=78):I=0
+5D=30+10*(A=78)
+6PR."Stardate",#5,3230-D,": your mission is ",
+7K=0:B=0:I=0
 
 12F.I=0TO63
 14J=RND(100)<5
@@ -107,6 +107,21 @@
 157PR." ",
 158N.J
 159N.I
+
+144F.I=0TO7
+147PR.:PR.#1,I+1,": ",
+149F.J=0TO7
+150M=@(8*I+J)
+151S=(I+1=U)*(J+1=V)
+152IFSPR."*",:GO.154
+153PR." ",
+154IFM<0PR."---",:GO.156
+155PR.#1,M/100,M/10-M/100*10,M-M/10*10,
+156IFSPR."*",:GO.158
+157PR." ",
+158N.J
+159N.I
+
 
 160PR.
 162PR."    ",
